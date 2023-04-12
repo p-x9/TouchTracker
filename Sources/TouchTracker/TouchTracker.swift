@@ -64,12 +64,17 @@ public struct TouchTrackingView<Content: View>: View {
 }
 
 extension TouchTrackingView {
-    // radius of mark on touched point
+    /// radius of mark on touched point
     public func touchPointRadius(_ radius: CGFloat) -> Self {
         set(radius, for: \.radius)
     }
 
-    // applying a border to touched points
+    /// color of mark on touched point
+    public func touchPointColor(_ color: Color) -> Self {
+        set(color, for: \.color)
+    }
+
+    /// applying a border to touched points
     public func touchPointBorder(_ enabled: Bool, color: Color = .black, width: CGFloat = 1) -> Self {
         self
             .set(enabled, for: \.isBordered)
@@ -78,7 +83,7 @@ extension TouchTrackingView {
 
     }
 
-    // shadow on touched points
+    /// shadow on touched points
     public func touchPointShadow(_ enabled: Bool, color: Color = .black, radius: CGFloat = 3) -> Self {
         self
             .set(enabled, for: \.isDropShadow)
@@ -86,12 +91,12 @@ extension TouchTrackingView {
             .set(radius, for: \.shadowRadius)
     }
 
-    // show image on touched points
+    /// show image on touched points
     public func touchPointImage(_ image: Image?) -> Self {
         set(image, for: \.image)
     }
 
-    // show touch coordinate
+    /// show touch coordinate
     public func showLocationLabel(_ enabled: Bool) -> Self {
         set(enabled, for: \.isShowLocation)
     }
@@ -104,7 +109,7 @@ extension TouchTrackingView {
 }
 
 public extension View {
-    // show a mark on the touched point
+    /// show a mark on the touched point
     func touchTrack() -> TouchTrackingView<Self> {
         TouchTrackingView {
             self
@@ -117,6 +122,10 @@ struct TouchTrackingView_Preview: PreviewProvider {
         Text("Hello")
                 .frame(width: 100, height: 100)
                 .touchTrack()
+                .touchPointRadius(8)
+                .touchPointColor(.orange)
+                .touchPointBorder(true, color: .blue, width: 1)
+                .touchPointShadow(true, color: .purple, radius: 3)
                 .showLocationLabel(true)
     }
 }

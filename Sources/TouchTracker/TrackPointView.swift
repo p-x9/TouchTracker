@@ -54,7 +54,10 @@ struct TouchPointView: View {
             }
             .when(isShowLocation) {
                 $0.overlay(
-                    locationText
+                    HStack(alignment: .center) {
+                        locationText
+                            .fixedSize()
+                    }
                         .position(x: radius, y: -16 - shadowRadius)
                 )
             }
