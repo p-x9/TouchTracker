@@ -53,11 +53,12 @@ public struct TouchTrackingView<Content: View>: View {
 
     public var body: some View {
         content
-            .overlay(
+            .background(
                 ZStack {
                     TouchLocationView($locations)
                         .frame(maxWidth: .infinity, maxHeight: .infinity)
                     touchPointsView
+                        .zIndex(.infinity)
                 }
             )
     }
@@ -119,7 +120,12 @@ public extension View {
 
 struct TouchTrackingView_Preview: PreviewProvider {
     static var previews: some View {
-        Text("Hello")
+        VStack {
+            Text("Hello")
+            Button("Button") {
+                print("tapped")
+            }
+        }
                 .frame(width: 100, height: 100)
                 .touchTrack()
                 .touchPointRadius(8)
