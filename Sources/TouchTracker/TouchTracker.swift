@@ -1,6 +1,122 @@
-public struct TouchTracker {
-    public private(set) var text = "Hello, World!"
+import SwiftUI
+import UIKit
 
-    public init() {
+public struct TouchTrackingView<Content: View>: View {
+    let content: Content
+
+    @State var locations: [CGPoint] = []
+
+    var radius: CGFloat = 20
+    var color: Color = .red
+
+    var isBordered: Bool = false
+    var borderColor: Color = .black
+    var borderWidth: CGFloat = 1
+
+    var isDropShadow: Bool = true
+    var shadowColor: Color = .black
+    var shadowRadius: CGFloat = 3
+
+    var image: Image?
+
+    var isShowLocation: Bool = false
+
+    public init(_ content: Content) {
+        self.content = content
+    }
+
+    public init(_ content: () -> Content) {
+        self.content = content()
+    }
+
+    var touchPointsView: some View {
+        ForEach(0..<locations.count, id: \.self) { index in
+            let location = locations[index]
+            TouchPointView(
+                location: location,
+                radius: radius,
+                color: color,
+                isBordered: isBordered,
+                borderColor: borderColor,
+                borderWidth: borderWidth,
+                isDropShadow: isDropShadow,
+                shadowColor: shadowColor,
+                shadowRadius: shadowRadius,
+                image: image,
+                isShowLocation: isShowLocation
+            )
+            .position(x: location.x - radius, y: location.y - radius)
+            .allowsHitTesting(false)
+        }
+        .allowsHitTesting(false)
+    }
+
+    public var body: some View {
+        content
+            .overlay(
+                ZStack {
+                    TouchLocationView($locations)
+                        .frame(maxWidth: .infinity, maxHeight: .infinity)
+                    touchPointsView
+                }
+            )
+    }
+}
+
+extension TouchTrackingView {
+    // radius of mark on touched point
+    public func touchPointRadius(_ radius: CGFloat) -> Self {
+        set(radius, for: \.radius)
+    }
+
+    // applying a border to touched points
+    public func touchPointBorder(_ enabled: Bool, color: Color = .black, width: CGFloat = 1) -> Self {
+        self
+            .set(enabled, for: \.isBordered)
+            .set(color, for: \.borderColor)
+            .set(width, for: \.borderWidth)
+
+    }
+
+    // shadow on touched points
+    public func touchPointShadow(_ enabled: Bool, color: Color = .black, radius: CGFloat = 3) -> Self {
+        self
+            .set(enabled, for: \.isDropShadow)
+            .set(color, for: \.shadowColor)
+            .set(radius, for: \.shadowRadius)
+    }
+
+    // show image on touched points
+    public func touchPointImage(_ image: Image?) -> Self {
+        set(image, for: \.image)
+    }
+
+    // show touch coordinate
+    public func showLocationLabel(_ enabled: Bool) -> Self {
+        set(enabled, for: \.isShowLocation)
+    }
+
+    private func set<T>(_ value: T, for keyPath: WritableKeyPath<TouchTrackingView, T>) -> Self {
+        var new = self
+        new[keyPath: keyPath] = value
+        return new
+    }
+}
+
+public extension View {
+    // show a mark on the touched point
+    func touchTrack() -> TouchTrackingView<Self> {
+        TouchTrackingView {
+            self
+        }
+    }
+}
+
+struct TouchTrackingView_Preview: PreviewProvider {
+    static var previews: some View {
+        Text("Hello")
+                .frame(width: 100, height: 100)
+                .touchTrack()
+                .showLocationLabel(true)
     }
 }
