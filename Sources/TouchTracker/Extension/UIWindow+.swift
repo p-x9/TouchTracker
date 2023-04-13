@@ -45,20 +45,19 @@ extension UIWindow {
                 return true
             }
             .forEach { view in
-                let touches = event.allTouches
-                touches?.forEach { touch in
-                    switch touch.phase {
-                    case .began:
-                        view.touchesBegan(Set([touch]), with: event)
-                    case .moved:
-                        view.touchesMoved(Set([touch]), with: event)
-                    case .ended:
-                        view.touchesEnded(Set([touch]), with: event)
-                    case .cancelled:
-                        view.touchesCancelled(Set([touch]), with: event)
-                    default:
-                        break
-                    }
+                guard let touches = event.allTouches else { return }
+                let began = touches.filter { $0.phase == .began }
+                let moved = touches.filter { $0.phase == .moved }
+                let ended = touches.filter { $0.phase == .cancelled || $0.phase == .ended }
+
+                if !began.isEmpty {
+                    view.touchesBegan(began, with: event)
+                }
+                if !moved.isEmpty {
+                    view.touchesMoved(moved, with: event)
+                }
+                if !ended.isEmpty {
+                    view.touchesEnded(ended, with: event)
                 }
             }
     }
