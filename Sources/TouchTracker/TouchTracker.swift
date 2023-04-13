@@ -23,10 +23,11 @@ public struct TouchTrackingView<Content: View>: View {
 
     public init(_ content: Content) {
         self.content = content
+        UIWindow.hook()
     }
 
     public init(_ content: () -> Content) {
-        self.content = content()
+        self.init(content())
     }
 
     var touchPointsView: some View {
@@ -53,10 +54,12 @@ public struct TouchTrackingView<Content: View>: View {
 
     public var body: some View {
         content
+            .hidden()
             .background(
                 ZStack {
-                    TouchLocationView($locations)
-                        .frame(maxWidth: .infinity, maxHeight: .infinity)
+                    TouchLocationView($locations) {
+                        content
+                    }
                     touchPointsView
                         .zIndex(.infinity)
                 }
@@ -126,12 +129,12 @@ struct TouchTrackingView_Preview: PreviewProvider {
                 print("tapped")
             }
         }
-                .frame(width: 100, height: 100)
-                .touchTrack()
-                .touchPointRadius(8)
-                .touchPointColor(.orange)
-                .touchPointBorder(true, color: .blue, width: 1)
-                .touchPointShadow(true, color: .purple, radius: 3)
-                .showLocationLabel(true)
+        .frame(width: 100, height: 100)
+        .touchTrack()
+        .touchPointRadius(8)
+        .touchPointColor(.orange)
+        .touchPointBorder(true, color: .blue, width: 1)
+        .touchPointShadow(true, color: .purple, radius: 3)
+        .showLocationLabel(true)
     }
 }
