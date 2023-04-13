@@ -75,12 +75,14 @@ class TouchPointUIView: UIWindow {
         self.image = image
         self.isShowLocation = isShowLocation
 
-        super.init(frame: .init(origin: location, size: .init(width: radius * 2, height: radius * 2)))
-        windowLevel = .statusBar
+        let frame = CGRect(origin: location,
+                           size: .init(width: radius * 2, height: radius * 2))
+        super.init(frame: frame)
 
         setupViews()
         setupViewConstraints()
 
+        windowLevel = .statusBar
         isUserInteractionEnabled = false
     }
 
@@ -114,7 +116,7 @@ class TouchPointUIView: UIWindow {
 
     func setupViewConstraints() {
         translatesAutoresizingMaskIntoConstraints = false
-
+        
         NSLayoutConstraint.activate([
             self.heightAnchor.constraint(equalToConstant: radius * 2),
             self.widthAnchor.constraint(equalToConstant: radius * 2),
