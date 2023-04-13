@@ -37,3 +37,31 @@ Text("Hello")
     .touchPointImage(Image(systemName: "swift").resizable())
 ```
 ![Example2](https://user-images.githubusercontent.com/50244599/231510854-c1669ba5-2071-446d-8cda-5131bce14511.PNG)
+
+### UIKit
+If you want to adapt it to the entire app created with UIKit, write the following.
+Use a view named `TouchTrackingUIView`
+```swift
+import TouchTracker
+
+class AppDelegate: UIResponder, UIApplicationDelegate {
+
+    var window: UIWindow?
+
+    let v = TouchTrackingUIView(isShowLocation: true)
+
+    func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey: Any]?) -> Bool {
+        if let window {
+            window.addSubview(v)
+            v.translatesAutoresizingMaskIntoConstraints = false
+
+            NSLayoutConstraint.activate([
+                v.topAnchor.constraint(equalTo: window.topAnchor),
+                v.bottomAnchor.constraint(equalTo: window.bottomAnchor),
+                v.leftAnchor.constraint(equalTo: window.leftAnchor),
+                v.rightAnchor.constraint(equalTo: window.rightAnchor),
+            ])
+        }
+        return true
+    }
+```
