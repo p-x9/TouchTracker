@@ -41,7 +41,7 @@ extension UIWindow {
         let moved = touches.filter { $0.phase == .moved }
         let ended = touches.filter { $0.phase == .cancelled || $0.phase == .ended }
 
-        let touchLocationViews = find(for: TouchLocationUIView.self)
+        let touchLocationViews: [UIView] = find(for: TouchLocationCocoaView.self) + find(for: TouchTrackingUIView.self)
 
         touchLocationViews
             .filter {

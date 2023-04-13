@@ -1,5 +1,5 @@
 //
-//  TouchLocationUIView.swift
+//  TouchLocationCocoaView.swift
 //  
 //
 //  Created by p-x9 on 2023/04/12.
@@ -9,7 +9,7 @@
 #if canImport(UIKit)
 import UIKit
 
-class TouchLocationUIView: UIView {
+class TouchLocationCocoaView: UIView {
     var touchesChangeHandler: (([CGPoint]) -> Void)?
 
     var touches: Set<UITouch> = []
