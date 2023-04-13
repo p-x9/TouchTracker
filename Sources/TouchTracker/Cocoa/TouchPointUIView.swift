@@ -19,19 +19,19 @@ class TouchPointUIView: UIWindow {
     }
     var radius: CGFloat
 
-    var color: UIColor = .red
+    var color: UIColor
 
-    var isBordered: Bool = true
-    var borderColor: UIColor = .black
-    var borderWidth: CGFloat = 1
+    var isBordered: Bool
+    var borderColor: UIColor
+    var borderWidth: CGFloat
 
-    var isDropShadow: Bool = true
-    var shadowColor: UIColor = .black
-    var shadowRadius: CGFloat = 3
+    var isDropShadow: Bool
+    var shadowColor: UIColor
+    var shadowRadius: CGFloat
 
     var image: UIImage?
 
-    var isShowLocation: Bool = false
+    var isShowLocation: Bool
 
     lazy var imageView: UIImageView = {
         let view = UIImageView()

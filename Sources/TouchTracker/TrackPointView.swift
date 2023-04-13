@@ -12,19 +12,19 @@ struct TouchPointView: View {
     let location: CGPoint
     let radius: CGFloat
 
-    var color: Color = .red
+    var color: Color
 
-    var isBordered: Bool = true
-    var borderColor: Color = .black
-    var borderWidth: CGFloat = 1
+    var isBordered: Bool
+    var borderColor: Color
+    var borderWidth: CGFloat
 
-    var isDropShadow: Bool = true
-    var shadowColor: Color = .black
-    var shadowRadius: CGFloat = 3
+    var isDropShadow: Bool
+    var shadowColor: Color
+    var shadowRadius: CGFloat
 
     var image: Image?
 
-    var isShowLocation: Bool = false
+    var isShowLocation: Bool
 
     var locationText: some View {
         let x = String(format: "%.1f", location.x)

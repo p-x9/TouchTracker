@@ -66,6 +66,21 @@ public class TouchTrackingUIView: UIView {
         UIWindow.hook()
     }
 
+    @available(iOS 14.0, *)
+    public convenience init(style: TouchPointStyle) {
+        self.init(
+            radius: style.radius,
+            color: UIColor(style.color),
+            isBordered: style.isBordered,
+            borderColor: UIColor(style.borderColor),
+            borderWidth: style.borderWidth,
+            isDropShadow: style.isDropShadow,
+            shadowColor: UIColor(style.shadowColor),
+            shadowRadius: style.shadowRadius,
+            isShowLocation: style.isShowLocation
+        )
+    }
+
     required init?(coder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
