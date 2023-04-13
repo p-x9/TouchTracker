@@ -80,6 +80,8 @@ class TouchPointUIView: UIWindow {
 
         setupViews()
         setupViewConstraints()
+
+        isUserInteractionEnabled = false
     }
 
     required init?(coder: NSCoder) {

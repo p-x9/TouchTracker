@@ -61,7 +61,9 @@ public class TouchTrackingUIView: UIView {
 
         super.init(frame: .null)
 
-        isMultipleTouchEnabled = true
+        isUserInteractionEnabled = false
+
+        UIWindow.hook()
     }
 
     required init?(coder: NSCoder) {
