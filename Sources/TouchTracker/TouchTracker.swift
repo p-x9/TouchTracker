@@ -46,7 +46,7 @@ public struct TouchTrackingView<Content: View>: View {
                 image: image,
                 isShowLocation: isShowLocation
             )
-            .position(x: location.x - radius, y: location.y - radius)
+            .position(location)
             .allowsHitTesting(false)
         }
         .allowsHitTesting(false)
