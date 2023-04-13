@@ -35,6 +35,12 @@ extension UIWindow {
     func hooked_sendEvent(_ event: UIEvent) {
         hooked_sendEvent(event)
 
+        guard let touches = event.allTouches else { return }
+
+        let began = touches.filter { $0.phase == .began }
+        let moved = touches.filter { $0.phase == .moved }
+        let ended = touches.filter { $0.phase == .cancelled || $0.phase == .ended }
+
         let touchLocationViews = find(for: TouchLocationUIView.self)
 
         touchLocationViews
@@ -45,11 +51,6 @@ extension UIWindow {
                 return true
             }
             .forEach { view in
-                guard let touches = event.allTouches else { return }
-                let began = touches.filter { $0.phase == .began }
-                let moved = touches.filter { $0.phase == .moved }
-                let ended = touches.filter { $0.phase == .cancelled || $0.phase == .ended }
-
                 if !began.isEmpty {
                     view.touchesBegan(began, with: event)
                 }
