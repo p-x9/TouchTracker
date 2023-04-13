@@ -48,8 +48,8 @@ class TouchLocationWrapView<Content: View>: UIHostingController<Content> {
         }
     }
 
-    lazy var trackLocationUIView: TouchLocationUIView  = {
-        let view = TouchLocationUIView(frame: .null)
+    lazy var trackLocationUIView: TouchLocationCocoaView  = {
+        let view = TouchLocationCocoaView(frame: .null)
         view.isHidden = true
         view.translatesAutoresizingMaskIntoConstraints = false
         view.touchesChangeHandler = { [weak self] locations in
