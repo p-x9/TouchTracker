@@ -9,17 +9,26 @@
 import SwiftUI
 
 public struct TouchPointStyle: Equatable {
+    /// radius of mark on touched point
     public var radius: CGFloat
+    /// color of mark on touched point
     public var color: Color
 
+    /// add a border to the mark of the touched point, or
     public var isBordered: Bool
+    /// border color of mark on touched point
     public var borderColor: Color
+    /// border width of mark on touched point
     public var borderWidth: CGFloat
 
+    /// add shadow to the mark of the touched point, or
     public var isDropShadow: Bool
+    /// shadow color of mark on touched point
     public var shadowColor: Color
+    /// shadow radius of mark on touched point
     public var shadowRadius: CGFloat
 
+    /// show coordinates label or not
     public var isShowLocation: Bool
 
     public init(
