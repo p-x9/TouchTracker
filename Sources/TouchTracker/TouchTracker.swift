@@ -1,4 +1,6 @@
 import SwiftUI
+
+#if canImport(UIKit)
 import UIKit
 
 public struct TouchTrackingView<Content: View>: View {
@@ -127,6 +129,7 @@ extension TouchTrackingView {
 
 public extension View {
     /// show a mark on the touched point
+    @available(macOS, unavailable)
     func touchTrack() -> TouchTrackingView<Self> {
         TouchTrackingView {
             self
@@ -151,3 +154,5 @@ struct TouchTrackingView_Preview: PreviewProvider {
         .showLocationLabel(true)
     }
 }
+
+#endif
