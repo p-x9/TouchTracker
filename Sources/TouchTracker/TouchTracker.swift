@@ -105,6 +105,19 @@ extension TouchTrackingView {
         set(enabled, for: \.isShowLocation)
     }
 
+    public func setTouchPointStyle(_ style: TouchPointStyle) -> Self {
+        self
+            .set(style.radius, for: \.radius)
+            .set(style.color, for: \.color)
+            .set(style.isBordered, for: \.isBordered)
+            .set(style.borderColor, for: \.borderColor)
+            .set(style.borderWidth, for: \.borderWidth)
+            .set(style.isDropShadow, for: \.isDropShadow)
+            .set(style.shadowColor, for: \.shadowColor)
+            .set(style.shadowRadius, for: \.shadowRadius)
+            .set(style.isShowLocation, for: \.isShowLocation)
+    }
+
     private func set<T>(_ value: T, for keyPath: WritableKeyPath<TouchTrackingView, T>) -> Self {
         var new = self
         new[keyPath: keyPath] = value
