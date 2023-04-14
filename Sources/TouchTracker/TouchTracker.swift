@@ -9,6 +9,8 @@ public struct TouchTrackingView<Content: View>: View {
     var radius: CGFloat = 20
     var color: Color = .red
 
+    var offset: CGPoint = .zero
+
     var isBordered: Bool = false
     var borderColor: Color = .black
     var borderWidth: CGFloat = 1
@@ -46,7 +48,7 @@ public struct TouchTrackingView<Content: View>: View {
                 image: image,
                 isShowLocation: isShowLocation
             )
-            .position(location)
+            .position(x: location.x + offset.x, y: location.y + offset.y)
             .allowsHitTesting(false)
         }
         .allowsHitTesting(false)
@@ -76,6 +78,11 @@ extension TouchTrackingView {
     /// color of mark on touched point
     public func touchPointColor(_ color: Color) -> Self {
         set(color, for: \.color)
+    }
+
+    /// offset of mark on touched point
+    public func touchPointOffset(x: CGFloat = 0, y: CGFloat = 0) -> Self {
+        set(.init(x: x, y: y), for: \.offset)
     }
 
     /// applying a border to touched points
@@ -109,6 +116,7 @@ extension TouchTrackingView {
         self
             .set(style.radius, for: \.radius)
             .set(style.color, for: \.color)
+            .set(style.offset, for: \.offset)
             .set(style.isBordered, for: \.isBordered)
             .set(style.borderColor, for: \.borderColor)
             .set(style.borderWidth, for: \.borderWidth)
@@ -145,6 +153,7 @@ struct TouchTrackingView_Preview: PreviewProvider {
         .frame(width: 100, height: 100)
         .touchTrack()
         .touchPointRadius(8)
+        .touchPointOffset(x: 0, y: -10)
         .touchPointColor(.orange)
         .touchPointBorder(true, color: .blue, width: 1)
         .touchPointShadow(true, color: .purple, radius: 3)
