@@ -12,19 +12,21 @@ import UIKit
 public class TouchTrackingUIView: UIView {
     let radius: CGFloat
 
-    var color: UIColor = .red
+    var color: UIColor
 
-    var isBordered: Bool = false
-    var borderColor: UIColor = .black
-    var borderWidth: CGFloat = 1
+    var offset: CGPoint
 
-    var isDropShadow: Bool = true
-    var shadowColor: UIColor = .black
-    var shadowRadius: CGFloat = 3
+    var isBordered: Bool
+    var borderColor: UIColor
+    var borderWidth: CGFloat
+
+    var isDropShadow: Bool
+    var shadowColor: UIColor
+    var shadowRadius: CGFloat
 
     var image: UIImage?
 
-    var isShowLocation: Bool = false
+    var isShowLocation: Bool
 
 
     var touches: Set<UITouch> = []
@@ -39,6 +41,7 @@ public class TouchTrackingUIView: UIView {
     public init(
         radius: CGFloat = 20,
         color: UIColor = .red,
+        offset: CGPoint = .zero,
         isBordered: Bool = false,
         borderColor: UIColor = .black,
         borderWidth: CGFloat = 1,
@@ -50,6 +53,7 @@ public class TouchTrackingUIView: UIView {
     ) {
         self.radius = radius
         self.color = color
+        self.offset = offset
         self.isBordered = isBordered
         self.borderColor = borderColor
         self.borderWidth = borderWidth
@@ -71,6 +75,7 @@ public class TouchTrackingUIView: UIView {
         self.init(
             radius: style.radius,
             color: UIColor(style.color),
+            offset: style.offset,
             isBordered: style.isBordered,
             borderColor: UIColor(style.borderColor),
             borderWidth: style.borderWidth,
@@ -132,7 +137,8 @@ public class TouchTrackingUIView: UIView {
 
         zip(pointViews, locations).forEach { view, location in
             view.location = location
-            view.center = location
+            view.center = .init(x: location.x + offset.x,
+                                y: location.y + offset.y)
             view.makeKeyAndVisible()
         }
     }

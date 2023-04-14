@@ -14,6 +14,9 @@ public struct TouchPointStyle: Equatable {
     /// color of mark on touched point
     public var color: Color
 
+    /// offset of mark on touched point
+    public var offset: CGPoint = .zero
+
     /// add a border to the mark of the touched point, or
     public var isBordered: Bool
     /// border color of mark on touched point
@@ -34,6 +37,7 @@ public struct TouchPointStyle: Equatable {
     public init(
         radius: CGFloat = 20,
         color: Color = .red,
+        offset: CGPoint = .zero,
         isBordered: Bool = false,
         borderColor: Color = .black,
         borderWidth: CGFloat = 1,
@@ -44,6 +48,7 @@ public struct TouchPointStyle: Equatable {
     ) {
         self.radius = radius
         self.color = color
+        self.offset = offset
         self.isBordered = isBordered
         self.borderColor = borderColor
         self.borderWidth = borderWidth
