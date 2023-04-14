@@ -29,6 +29,7 @@ extension UIWindow {
     static func hook() {
         if Self.hooked { return }
         Self.swizzle(orig: #selector(sendEvent(_:)), hooked: #selector(hooked_sendEvent(_:)))
+        Self.hooked = true
     }
 
     @objc
