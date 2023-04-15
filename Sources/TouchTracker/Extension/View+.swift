@@ -8,6 +8,16 @@
 
 import SwiftUI
 
+extension View {
+    /// show a mark on the touched point
+    @available(macOS, unavailable)
+    public func touchTrack() -> TouchTrackingView<Self> {
+        TouchTrackingView {
+            self
+        }
+    }
+}
+
 // ref: https://github.com/YusukeHosonuma/SwiftUI-Common/blob/main/Sources/SwiftUICommon/Extension/View%2B.swift
 extension View {
     @ViewBuilder
