@@ -2,7 +2,9 @@ import SwiftUI
 
 #if canImport(UIKit)
 import UIKit
+#endif
 
+@available(macOS, unavailable)
 public struct TouchTrackingView<Content: View>: View {
     let content: Content
 
@@ -25,7 +27,9 @@ public struct TouchTrackingView<Content: View>: View {
 
     public init(_ content: Content) {
         self.content = content
+#if canImport(UIKit)
         UIWindow.hook()
+#endif
     }
 
     public init(_ content: () -> Content) {
@@ -56,6 +60,7 @@ public struct TouchTrackingView<Content: View>: View {
 
     public var body: some View {
         content
+#if canImport(UIKit)
             .hidden()
             .background(
                 ZStack {
@@ -66,9 +71,11 @@ public struct TouchTrackingView<Content: View>: View {
                         .zIndex(.infinity)
                 }
             )
+#endif
     }
 }
 
+@available(macOS, unavailable)
 extension TouchTrackingView {
     /// radius of mark on touched point
     public func touchPointRadius(_ radius: CGFloat) -> Self {
@@ -127,16 +134,6 @@ extension TouchTrackingView {
     }
 }
 
-public extension View {
-    /// show a mark on the touched point
-    @available(macOS, unavailable)
-    func touchTrack() -> TouchTrackingView<Self> {
-        TouchTrackingView {
-            self
-        }
-    }
-}
-
 struct TouchTrackingView_Preview: PreviewProvider {
     static var previews: some View {
         VStack {
@@ -146,13 +143,14 @@ struct TouchTrackingView_Preview: PreviewProvider {
             }
         }
         .frame(width: 100, height: 100)
+#if canImport(UIKit)
         .touchTrack()
         .touchPointRadius(8)
         .touchPointColor(.orange)
         .touchPointBorder(true, color: .blue, width: 1)
         .touchPointShadow(true, color: .purple, radius: 3)
         .showLocationLabel(true)
+#endif
     }
 }
 
-#endif
