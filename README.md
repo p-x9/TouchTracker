@@ -24,6 +24,7 @@ TouchTrackingView {
 Text("Hello")
     .touchTrack() // show touch point
     .touchPointRadius(8) // radius of mark on touched point
+    touchPointOffset(x: 0, y: -10) // offset of mark position
     .touchPointColor(.orange) // color of mark on touched point
     .touchPointBorder(true, color: .blue, width: 1) // applying a border to touched points
     .touchPointShadow(true, color: .purple, radius: 3) // shadow on touched points
