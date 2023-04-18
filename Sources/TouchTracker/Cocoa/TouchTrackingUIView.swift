@@ -36,7 +36,7 @@ public class TouchTrackingUIView: UIView {
         }
     }
 
-    var pointViews = [TouchPointUIView]()
+    var pointWindows = [TouchPointUIView]()
 
     public init(
         radius: CGFloat = 20,
@@ -110,16 +110,16 @@ public class TouchTrackingUIView: UIView {
     }
 
     func updatePoints() {
-        if pointViews.count > touches.count {
-            pointViews[touches.count..<pointViews.count].forEach {
+        if pointWindows.count > touches.count {
+            pointWindows[touches.count..<pointWindows.count].forEach {
                 $0.isHidden = true
                 $0.windowScene = nil
             }
-            pointViews = Array(pointViews[0..<touches.count])
+            pointWindows = Array(pointWindows[0..<touches.count])
         }
-        if pointViews.count < touches.count {
-            let diff = touches.count - pointViews.count
-            pointViews += (0..<diff).map { _ in
+        if pointWindows.count < touches.count {
+            let diff = touches.count - pointWindows.count
+            pointWindows += (0..<diff).map { _ in
                 TouchPointUIView(
                     location: .zero,
                     radius: radius,
@@ -135,11 +135,12 @@ public class TouchTrackingUIView: UIView {
             }
         }
 
-        zip(pointViews, locations).forEach { view, location in
-            view.location = location
-            view.center = .init(x: location.x + offset.x,
+        zip(pointWindows, locations).forEach { window, location in
+            window.location = location
+            window.center = .init(x: location.x + offset.x,
                                 y: location.y + offset.y)
-            view.makeKeyAndVisible()
+            window.windowScene = window.windowScene
+            window.makeKeyAndVisible()
         }
     }
 }
