@@ -36,7 +36,10 @@ extension UIWindow {
     func hooked_sendEvent(_ event: UIEvent) {
         hooked_sendEvent(event)
 
-        guard let touches = event.allTouches else { return }
+        guard case .touches = event.type,
+              let touches = event.allTouches else {
+            return
+        }
 
         let began = touches.filter { $0.phase == .began }
         let moved = touches.filter { $0.phase == .moved }
