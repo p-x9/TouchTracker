@@ -139,7 +139,7 @@ public class TouchTrackingUIView: UIView {
             window.location = location
             window.center = .init(x: location.x + offset.x,
                                 y: location.y + offset.y)
-            window.windowScene = window.windowScene
+            window.windowScene = self.window?.windowScene
             window.isHidden = false
         }
     }
