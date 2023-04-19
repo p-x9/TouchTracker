@@ -100,6 +100,8 @@ class TouchPointUIView: UIWindow {
         }
 
         if isDropShadow {
+            layer.shadowOpacity = 0.33
+            layer.shadowOffset = .zero
             layer.shadowColor = shadowColor.cgColor
             layer.shadowRadius = shadowRadius
         }
