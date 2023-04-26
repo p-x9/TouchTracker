@@ -90,6 +90,12 @@ public class TouchTrackingUIView: UIView {
         fatalError("init(coder:) has not been implemented")
     }
 
+    deinit {
+        pointWindows.forEach {
+            $0.isHidden = true
+        }
+    }
+
     public override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
         self.touches.formUnion(touches)
         self.locations = self.touches.map { $0.location(in: self) }
