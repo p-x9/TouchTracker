@@ -98,21 +98,29 @@ public class TouchTrackingUIView: UIView {
 
     public override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
         self.touches.formUnion(touches)
-        self.locations = self.touches.map { $0.location(in: self) }
+        updateLocations()
     }
 
     public override func touchesMoved(_ touches: Set<UITouch>, with event: UIEvent?) {
-        self.locations = self.touches.map { $0.location(in: self) }
+        updateLocations()
     }
 
     public override func touchesEnded(_ touches: Set<UITouch>, with event: UIEvent?) {
         self.touches.subtract(touches)
-        self.locations = self.touches.map { $0.location(in: self) }
+        updateLocations()
     }
 
     public override func touchesCancelled(_ touches: Set<UITouch>, with event: UIEvent?) {
         self.touches.subtract(touches)
-        self.locations = self.touches.map { $0.location(in: self) }
+        updateLocations()
+    }
+
+    func updateLocations() {
+        self.touches = self.touches.filter { $0.phase != .cancelled && $0.phase != .ended }
+        let newLocations = self.touches.map { $0.location(in: self) }
+        if self.locations != newLocations {
+            self.locations = newLocations
+        }
     }
 
     func updatePoints() {
