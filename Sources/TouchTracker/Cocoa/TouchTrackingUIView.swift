@@ -144,6 +144,7 @@ public class TouchTrackingUIView: UIView {
                     isDropShadow: isDropShadow,
                     shadowColor: shadowColor,
                     shadowRadius: shadowRadius,
+                    image: image,
                     isShowLocation: isShowLocation
                 )
             }
