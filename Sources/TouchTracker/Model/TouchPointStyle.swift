@@ -30,6 +30,8 @@ public struct TouchPointStyle: Equatable {
     public var shadowColor: Color
     /// shadow radius of mark on touched point
     public var shadowRadius: CGFloat
+    /// shadow offset of mark on touched point
+    public var shadowOffset: CGPoint
 
     /// show coordinates label or not
     public var isShowLocation: Bool
@@ -44,6 +46,7 @@ public struct TouchPointStyle: Equatable {
         isDropShadow: Bool = true,
         shadowColor: Color = .black,
         shadowRadius: CGFloat = 3,
+        shadowOffset: CGPoint = .zero,
         isShowLocation: Bool = false
     ) {
         self.radius = radius
@@ -55,6 +58,7 @@ public struct TouchPointStyle: Equatable {
         self.isDropShadow = isDropShadow
         self.shadowColor = shadowColor
         self.shadowRadius = shadowRadius
+        self.shadowOffset = shadowOffset
         self.isShowLocation = isShowLocation
     }
 }
