@@ -23,6 +23,7 @@ public class TouchTrackingUIView: UIView {
     var isDropShadow: Bool
     var shadowColor: UIColor
     var shadowRadius: CGFloat
+    var shadowOffset: CGPoint
 
     var image: UIImage?
 
@@ -48,6 +49,7 @@ public class TouchTrackingUIView: UIView {
         isDropShadow: Bool = true,
         shadowColor: UIColor = .black,
         shadowRadius: CGFloat = 3,
+        shadowOffset: CGPoint = .zero,
         image: UIImage? = nil,
         isShowLocation: Bool = false
     ) {
@@ -60,6 +62,7 @@ public class TouchTrackingUIView: UIView {
         self.isDropShadow = isDropShadow
         self.shadowColor = shadowColor
         self.shadowRadius = shadowRadius
+        self.shadowOffset = shadowOffset
         self.image = image
         self.isShowLocation = isShowLocation
 
@@ -82,6 +85,7 @@ public class TouchTrackingUIView: UIView {
             isDropShadow: style.isDropShadow,
             shadowColor: UIColor(style.shadowColor),
             shadowRadius: style.shadowRadius,
+            shadowOffset: style.shadowOffset,
             isShowLocation: style.isShowLocation
         )
     }
@@ -144,6 +148,7 @@ public class TouchTrackingUIView: UIView {
                     isDropShadow: isDropShadow,
                     shadowColor: shadowColor,
                     shadowRadius: shadowRadius,
+                    shadowOffset: shadowOffset,
                     image: image,
                     isShowLocation: isShowLocation
                 )

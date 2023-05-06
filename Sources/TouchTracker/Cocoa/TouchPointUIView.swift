@@ -28,6 +28,7 @@ class TouchPointUIView: UIWindow {
     var isDropShadow: Bool
     var shadowColor: UIColor
     var shadowRadius: CGFloat
+    var shadowOffset: CGPoint
 
     var image: UIImage?
 
@@ -60,6 +61,7 @@ class TouchPointUIView: UIWindow {
         isDropShadow: Bool,
         shadowColor: UIColor,
         shadowRadius: CGFloat,
+        shadowOffset: CGPoint,
         image: UIImage? = nil,
         isShowLocation: Bool
     ) {
@@ -72,6 +74,7 @@ class TouchPointUIView: UIWindow {
         self.isDropShadow = isDropShadow
         self.shadowColor = shadowColor
         self.shadowRadius = shadowRadius
+        self.shadowOffset = shadowOffset
         self.image = image
         self.isShowLocation = isShowLocation
 
@@ -100,8 +103,9 @@ class TouchPointUIView: UIWindow {
         }
 
         if isDropShadow {
-            layer.shadowOpacity = 0.33
-            layer.shadowOffset = .zero
+            // shadowOpacity is configured by alpha of shadowColor directly
+            // layer.shadowOpacity = 0.33
+            layer.shadowOffset = .init(width: shadowOffset.x, height: shadowOffset.y)
             layer.shadowColor = shadowColor.cgColor
             layer.shadowRadius = shadowRadius
         }

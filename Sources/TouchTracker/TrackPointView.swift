@@ -21,6 +21,7 @@ struct TouchPointView: View {
     var isDropShadow: Bool
     var shadowColor: Color
     var shadowRadius: CGFloat
+    var shadowOffset: CGPoint
 
     var image: Image?
 
@@ -50,7 +51,12 @@ struct TouchPointView: View {
                 $0.overlay($1)
             }
             .when(isDropShadow) {
-                $0.shadow(color: shadowColor, radius: shadowRadius)
+                $0.shadow(
+                    color: shadowColor,
+                    radius: shadowRadius,
+                    x: shadowOffset.x,
+                    y: shadowOffset.y
+                )
             }
             .when(isShowLocation) {
                 $0.overlay(

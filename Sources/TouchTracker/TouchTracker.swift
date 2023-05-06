@@ -22,6 +22,7 @@ public struct TouchTrackingView<Content: View>: View {
     var isDropShadow: Bool = true
     var shadowColor: Color = .black
     var shadowRadius: CGFloat = 3
+    var shadowOffset: CGPoint = .zero
 
     var image: Image?
 
@@ -51,6 +52,7 @@ public struct TouchTrackingView<Content: View>: View {
                 isDropShadow: isDropShadow,
                 shadowColor: shadowColor,
                 shadowRadius: shadowRadius,
+                shadowOffset: shadowOffset,
                 image: image,
                 isShowLocation: isShowLocation
             )
@@ -104,11 +106,12 @@ extension TouchTrackingView {
     }
 
     /// shadow on touched points
-    public func touchPointShadow(_ enabled: Bool, color: Color = .black, radius: CGFloat = 3) -> Self {
+    public func touchPointShadow(_ enabled: Bool, color: Color = .black, radius: CGFloat = 3, offset: CGPoint = .zero) -> Self {
         self
             .set(enabled, for: \.isDropShadow)
             .set(color, for: \.shadowColor)
             .set(radius, for: \.shadowRadius)
+            .set(offset, for: \.shadowOffset)
     }
 
     /// show image on touched points
@@ -132,6 +135,7 @@ extension TouchTrackingView {
             .set(style.isDropShadow, for: \.isDropShadow)
             .set(style.shadowColor, for: \.shadowColor)
             .set(style.shadowRadius, for: \.shadowRadius)
+            .set(style.shadowOffset, for: \.shadowOffset)
             .set(style.isShowLocation, for: \.isShowLocation)
     }
 
