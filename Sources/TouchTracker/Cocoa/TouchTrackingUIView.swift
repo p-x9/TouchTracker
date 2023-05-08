@@ -48,11 +48,7 @@ public class TouchTrackingUIView: UIView {
     }
 
     /// If set to false, the touched point will not be displayed
-    public var isEnabled: Bool = true {
-        didSet {
-            updateLocations()
-        }
-    }
+    public var isEnabled: Bool = true
 
     var pointWindows = [TouchPointUIView]()
 
