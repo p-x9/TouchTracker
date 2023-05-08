@@ -10,30 +10,47 @@
 import UIKit
 
 public class TouchTrackingUIView: UIView {
-    let radius: CGFloat
+    /// radius of mark on touched point
+    public var radius: CGFloat
+    /// color of mark on touched point
+    public var color: UIColor
 
-    var color: UIColor
+    /// offset of mark on touched point/
+    public var offset: CGPoint
 
-    var offset: CGPoint
+    /// add a border to the mark of the touched point, or
+    public var isBordered: Bool
+    /// border color of mark on touched point
+    public var borderColor: UIColor
+    /// border width of mark on touched point
+    public var borderWidth: CGFloat
 
-    var isBordered: Bool
-    var borderColor: UIColor
-    var borderWidth: CGFloat
+    /// add shadow to the mark of the touched point, or
+    public var isDropShadow: Bool
+    /// shadow color of mark on touched point
+    public var shadowColor: UIColor
+    /// shadow radius of mark on touched point
+    public var shadowRadius: CGFloat
+    /// shadow offset of mark on touched point
+    public var shadowOffset: CGPoint
 
-    var isDropShadow: Bool
-    var shadowColor: UIColor
-    var shadowRadius: CGFloat
-    var shadowOffset: CGPoint
+    public var image: UIImage?
 
-    var image: UIImage?
-
-    var isShowLocation: Bool
+    /// show coordinates label or not
+    public var isShowLocation: Bool
 
 
     var touches: Set<UITouch> = []
     var locations: [CGPoint] = [] {
         didSet {
             updatePoints()
+        }
+    }
+
+    /// If set to false, the touched point will not be displayed
+    public var isEnabled: Bool = true {
+        didSet {
+            updateLocations()
         }
     }
 
@@ -120,6 +137,10 @@ public class TouchTrackingUIView: UIView {
     }
 
     func updateLocations() {
+        if !isEnabled {
+            self.touches = []
+        }
+
         self.touches = self.touches.filter { $0.phase != .cancelled && $0.phase != .ended }
         let newLocations = self.touches.map { $0.location(in: self) }
         if self.locations != newLocations {
