@@ -177,6 +177,8 @@ public class TouchTrackingUIView: UIView {
             window.center = .init(x: location.x + offset.x,
                                 y: location.y + offset.y)
             window.windowScene = self.window?.windowScene
+            // WORKAROUND: Apply changes of orientation
+            window.rootViewController = .init()
             window.isHidden = false
         }
     }
