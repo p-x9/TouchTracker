@@ -17,14 +17,14 @@ public struct TouchPointStyle: Equatable {
     /// offset of mark on touched point
     public var offset: CGPoint = .zero
 
-    /// add a border to the mark of the touched point, or
+    /// A boolean value that indicates whatever adding a border to the mark of the touched point, or
     public var isBordered: Bool
     /// border color of mark on touched point
     public var borderColor: Color
     /// border width of mark on touched point
     public var borderWidth: CGFloat
 
-    /// add shadow to the mark of the touched point, or
+    /// A boolean value that indicates whatever adding shadow to the mark of the touched point
     public var isDropShadow: Bool
     /// shadow color of mark on touched point
     public var shadowColor: Color
@@ -33,9 +33,22 @@ public struct TouchPointStyle: Equatable {
     /// shadow offset of mark on touched point
     public var shadowOffset: CGPoint
 
-    /// show coordinates label or not
+    /// A boolean value that indicates whatever adding show coordinates label or not
     public var isShowLocation: Bool
-
+    
+    /// Initializer
+    /// - Parameters:
+    ///   - radius: radius of mark on touched point
+    ///   - color: color of mark on touched point
+    ///   - offset: offset of mark on touched point/
+    ///   - isBordered: A boolean value that indicates whatever adding a border to the mark of the touched point, or
+    ///   - borderColor: border color of mark on touched point
+    ///   - borderWidth: border width of mark on touched point
+    ///   - isDropShadow: A boolean value that indicates whatever adding shadow to the mark of the touched point
+    ///   - shadowColor: shadow color of mark on touched point
+    ///   - shadowRadius: shadow radius of mark on touched point
+    ///   - shadowOffset: shadow offset of mark on touched point
+    ///   - isShowLocation: A boolean value that indicates whatever adding show coordinates label or not
     public init(
         radius: CGFloat = 20,
         color: Color = .red,
