@@ -28,6 +28,7 @@ Text("Hello")
     .touchPointColor(.orange) // color of mark on touched point
     .touchPointBorder(true, color: .blue, width: 1) // applying a border to touched points
     .touchPointShadow(true, color: .purple, radius: 3) // shadow on touched points
+    .touchPointDisplayMode(.recordingOnly) // display mode of touched points
     .showLocationLabel(true) // show touch coordinate
 ```
 ![Example](https://user-images.githubusercontent.com/50244599/231509731-d3ea5df0-1981-4911-9a14-2b57bf575eb7.PNG)

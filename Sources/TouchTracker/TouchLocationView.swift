@@ -13,17 +13,20 @@ import UIKit
 
 struct TouchLocationView<Content: View>: UIViewControllerRepresentable {
     @Binding var locations: [CGPoint]
+    @Binding var isCaptured: Bool
     let content: () -> Content
 
-    init(_ locations: Binding<[CGPoint]>, content: @escaping () -> Content) {
+    init(_ locations: Binding<[CGPoint]>, isCaptured: Binding<Bool>, content: @escaping () -> Content) {
         self._locations = locations
+        self._isCaptured = isCaptured
         self.content = content
     }
 
     func makeUIViewController(context: Context) -> some UIViewController {
         let controller = TouchLocationWrapView(rootView: content())
-        controller.touchesChangeHandler = { locations in
+        controller.touchesChangeHandler = { [weak controller] locations in
             self.$locations.wrappedValue = locations
+            self.$isCaptured.wrappedValue = controller?.isCaptured ?? false
         }
         return controller
     }
@@ -31,8 +34,9 @@ struct TouchLocationView<Content: View>: UIViewControllerRepresentable {
     func updateUIViewController(_ uiViewController: UIViewControllerType, context: Context) {
         guard let controller = uiViewController as? TouchLocationWrapView<Content> else { return }
         controller.rootView = content()
-        controller.touchesChangeHandler = { locations in
+        controller.touchesChangeHandler = { [weak controller] locations in
             self.$locations.wrappedValue = locations
+            self.$isCaptured.wrappedValue = controller?.isCaptured ?? false
         }
     }
     
@@ -40,12 +44,8 @@ struct TouchLocationView<Content: View>: UIViewControllerRepresentable {
 
 class TouchLocationWrapView<Content: View>: UIHostingController<Content> {
     var touchesChangeHandler: (([CGPoint]) -> Void)?
-
-    var touches: Set<UITouch> = []
-    var locations: [CGPoint] = [] {
-        didSet {
-            touchesChangeHandler?(locations)
-        }
+    var isCaptured: Bool {
+        view.window?.screen.isCaptured ?? false
     }
 
     lazy var trackLocationUIView: TouchLocationCocoaView  = {
