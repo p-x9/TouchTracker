@@ -70,6 +70,7 @@ public class TouchTrackingUIView: UIView {
     ///   - shadowOffset: shadow offset of mark on touched point
     ///   - image: Image to be displayed at the touched point mark
     ///   - isShowLocation: A boolean value that indicates whatever adding show coordinates label or not
+    ///   - displayMode: display mode of touched points.
     public init(
         radius: CGFloat = 20,
         color: UIColor = .red,

@@ -52,6 +52,7 @@ public struct TouchPointStyle: Equatable {
     ///   - shadowRadius: shadow radius of mark on touched point
     ///   - shadowOffset: shadow offset of mark on touched point
     ///   - isShowLocation: A boolean value that indicates whatever adding show coordinates label or not
+    ///   - displayMode: display mode of touched points.
     public init(
         radius: CGFloat = 20,
         color: Color = .red,
