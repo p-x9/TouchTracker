@@ -35,6 +35,9 @@ public struct TouchPointStyle: Equatable {
 
     /// A boolean value that indicates whatever adding show coordinates label or not
     public var isShowLocation: Bool
+
+    /// display mode of touched points.
+    public var displayMode: DisplayMode
     
     /// Initializer
     /// - Parameters:
@@ -60,7 +63,8 @@ public struct TouchPointStyle: Equatable {
         shadowColor: Color = .black,
         shadowRadius: CGFloat = 3,
         shadowOffset: CGPoint = .zero,
-        isShowLocation: Bool = false
+        isShowLocation: Bool = false,
+        displayMode: DisplayMode = .always
     ) {
         self.radius = radius
         self.color = color
@@ -73,5 +77,6 @@ public struct TouchPointStyle: Equatable {
         self.shadowRadius = shadowRadius
         self.shadowOffset = shadowOffset
         self.isShowLocation = isShowLocation
+        self.displayMode = displayMode
     }
 }

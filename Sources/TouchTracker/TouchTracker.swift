@@ -9,6 +9,7 @@ public struct TouchTrackingView<Content: View>: View {
     let content: Content
 
     @State var locations: [CGPoint] = []
+    @State var isCaptured: Bool = false
 
     var radius: CGFloat = 20
     var color: Color = .red
@@ -27,6 +28,8 @@ public struct TouchTrackingView<Content: View>: View {
     var image: Image?
 
     var isShowLocation: Bool = false
+
+    var displayMode: DisplayMode = .always
 
     public init(_ content: Content) {
         self.content = content
@@ -68,11 +71,13 @@ public struct TouchTrackingView<Content: View>: View {
             .hidden()
             .background(
                 ZStack {
-                    TouchLocationView($locations) {
+                    TouchLocationView($locations, isCaptured: $isCaptured) {
                         content
                     }
-                    touchPointsView
-                        .zIndex(.infinity)
+                    if displayMode.shouldDisplay(captured: isCaptured){
+                        touchPointsView
+                            .zIndex(.infinity)
+                    }
                 }
             )
 #endif
@@ -124,6 +129,11 @@ extension TouchTrackingView {
         set(enabled, for: \.isShowLocation)
     }
 
+    /// display mode of touched points.
+    public func touchPointDisplayMode(_ mode: DisplayMode) -> Self {
+        set(mode, for: \.displayMode)
+    }
+
     public func setTouchPointStyle(_ style: TouchPointStyle) -> Self {
         self
             .set(style.radius, for: \.radius)
@@ -137,6 +147,7 @@ extension TouchTrackingView {
             .set(style.shadowRadius, for: \.shadowRadius)
             .set(style.shadowOffset, for: \.shadowOffset)
             .set(style.isShowLocation, for: \.isShowLocation)
+            .set(style.displayMode, for: \.displayMode)
     }
 
     private func set<T>(_ value: T, for keyPath: WritableKeyPath<TouchTrackingView, T>) -> Self {
