@@ -40,6 +40,9 @@ public class TouchTrackingUIView: UIView {
     /// A boolean value that indicates whatever adding show coordinates label or not
     public var isShowLocation: Bool
 
+    /// display mode of touched points.
+    public var displayMode: DisplayMode
+
 
     var touches: Set<UITouch> = []
     var locations: [CGPoint] = [] {
@@ -79,7 +82,8 @@ public class TouchTrackingUIView: UIView {
         shadowRadius: CGFloat = 3,
         shadowOffset: CGPoint = .zero,
         image: UIImage? = nil,
-        isShowLocation: Bool = false
+        isShowLocation: Bool = false,
+        displayMode: DisplayMode = .always
     ) {
         self.radius = radius
         self.color = color
@@ -93,6 +97,7 @@ public class TouchTrackingUIView: UIView {
         self.shadowOffset = shadowOffset
         self.image = image
         self.isShowLocation = isShowLocation
+        self.displayMode = displayMode
 
         super.init(frame: .null)
 
@@ -160,6 +165,15 @@ public class TouchTrackingUIView: UIView {
     }
 
     func updatePoints() {
+        let isCaptured = window?.screen.isCaptured ?? false
+        let shouldDisplay = displayMode.shouldDisplay(captured: isCaptured)
+
+        if !shouldDisplay {
+            pointWindows.forEach { $0.isHidden = true }
+            pointWindows = []
+            return
+        }
+
         if pointWindows.count > touches.count {
             pointWindows[touches.count..<pointWindows.count].forEach {
                 $0.isHidden = true
@@ -186,6 +200,8 @@ public class TouchTrackingUIView: UIView {
                 )
             }
         }
+
+        let locations = touches.map { $0.location(in: nil) }
 
         zip(pointWindows, locations).forEach { window, location in
             window.location = location
