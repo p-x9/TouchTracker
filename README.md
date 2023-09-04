@@ -67,3 +67,20 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         return true
     }
 ```
+
+
+#### Propagate touch events to other windows
+The following configuration allows you to share a touch event received in one window with other windows.
+
+```swift
+v.shouldPropagateEventAcrossWindows = true
+```
+
+In the given configuration, even when windows overlap, typically only one window receives a touch event.
+Moreover, if a touch event starts in one window, such as Window A, it will only be responsive in Window A, even if it moves to another window, like Window B.
+
+Therefore, the touch event can be shared so that the marker of the tapped point will be displayed in the other window even in such a case.
+
+
+## License
+TouchTracker is released under the MIT License. See [LICENSE](./LICENSE)
