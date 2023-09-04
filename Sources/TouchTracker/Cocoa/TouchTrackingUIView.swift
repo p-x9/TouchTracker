@@ -1,9 +1,9 @@
 //
 //  CocoaTrackPointManager.swift
-//  
+//
 //
 //  Created by p-x9 on 2023/04/14.
-//  
+//
 //
 
 #if canImport(UIKit)
@@ -46,7 +46,7 @@ public class TouchTrackingUIView: UIView {
     /// A boolean value that indicates whether the event should propagate across windows.
     /// If set to `true`, the touch events received in one window will also be shared
     /// with other windows when applicable.
-    public var shouldPropagateEventAcrossWindows: Bool = true
+    public var shouldPropagateEventAcrossWindows: Bool = false
 
     var touches: Set<UITouch> = []
     var locations: [CGPoint] = [] {
@@ -59,7 +59,7 @@ public class TouchTrackingUIView: UIView {
     public var isEnabled: Bool = true
 
     var pointWindows = [TouchPointUIView]()
-    
+
     /// initializer
     /// - Parameters:
     ///   - radius: radius of mark on touched point
