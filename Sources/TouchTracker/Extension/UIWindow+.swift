@@ -45,7 +45,15 @@ extension UIWindow {
         let moved = touches.filter { $0.phase == .moved }
         let ended = touches.filter { $0.phase == .cancelled || $0.phase == .ended }
 
-        let touchLocationViews: [UIView] = find(for: TouchLocationCocoaView.self) + find(for: TouchTrackingUIView.self)
+        let touchLocationViews: [any TouchTrackable] = UIApplication.shared.connectedScenes
+            .lazy
+            .compactMap { $0 as? UIWindowScene }
+            .reduce([]) { partialResult, scene in
+                partialResult + scene.windows
+            }
+            .reduce([]) { partialResult, window in
+                partialResult + window.find(for: TouchLocationCocoaView.self) + window.find(for: TouchTrackingUIView.self)
+            }
 
         touchLocationViews
             .filter {
@@ -56,13 +64,13 @@ extension UIWindow {
             }
             .forEach { view in
                 if !began.isEmpty {
-                    view.touchesBegan(began, with: event)
+                    view.touchesBegan(began, with: self)
                 }
                 if !moved.isEmpty {
-                    view.touchesMoved(moved, with: event)
+                    view.touchesMoved(moved, with: self)
                 }
                 if !ended.isEmpty {
-                    view.touchesEnded(ended, with: event)
+                    view.touchesEndedOrCancelled(ended, with: self)
                 }
             }
     }

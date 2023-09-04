@@ -1,9 +1,9 @@
 //
 //  CocoaTrackPointManager.swift
-//  
+//
 //
 //  Created by p-x9 on 2023/04/14.
-//  
+//
 //
 
 #if canImport(UIKit)
@@ -43,6 +43,10 @@ public class TouchTrackingUIView: UIView {
     /// display mode of touched points.
     public var displayMode: DisplayMode
 
+    /// A boolean value that indicates whether the event should propagate across windows.
+    /// If set to `true`, the touch events received in one window will also be shared
+    /// with other windows when applicable.
+    public var shouldPropagateEventAcrossWindows: Bool = false
 
     var touches: Set<UITouch> = []
     var locations: [CGPoint] = [] {
@@ -55,7 +59,7 @@ public class TouchTrackingUIView: UIView {
     public var isEnabled: Bool = true
 
     var pointWindows = [TouchPointUIView]()
-    
+
     /// initializer
     /// - Parameters:
     ///   - radius: radius of mark on touched point
@@ -134,25 +138,6 @@ public class TouchTrackingUIView: UIView {
         }
     }
 
-    public override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
-        self.touches.formUnion(touches)
-        updateLocations()
-    }
-
-    public override func touchesMoved(_ touches: Set<UITouch>, with event: UIEvent?) {
-        updateLocations()
-    }
-
-    public override func touchesEnded(_ touches: Set<UITouch>, with event: UIEvent?) {
-        self.touches.subtract(touches)
-        updateLocations()
-    }
-
-    public override func touchesCancelled(_ touches: Set<UITouch>, with event: UIEvent?) {
-        self.touches.subtract(touches)
-        updateLocations()
-    }
-
     func updateLocations() {
         if !isEnabled {
             self.touches = []
@@ -179,6 +164,7 @@ public class TouchTrackingUIView: UIView {
             pointWindows[touches.count..<pointWindows.count].forEach {
                 $0.isHidden = true
                 $0.windowScene = nil
+                $0.removeFromSuperview()
             }
             pointWindows = Array(pointWindows[0..<touches.count])
         }
@@ -207,12 +193,46 @@ public class TouchTrackingUIView: UIView {
         zip(pointWindows, locations).forEach { window, location in
             window.location = location
             window.center = .init(x: location.x + offset.x,
-                                y: location.y + offset.y)
-            window.windowScene = self.window?.windowScene
-            // WORKAROUND: Apply changes of orientation
-            window.rootViewController = .init()
+                                  y: location.y + offset.y)
+
+            if shouldPropagateEventAcrossWindows,
+               let screen = self.window?.screen,
+               let keyboardScene = UIWindowScene.keyboardScene(for: screen),
+               let keyboardRemoteWindow = keyboardScene.allWindows.first {
+                keyboardRemoteWindow.addSubview(window)
+            } else {
+                // WORKAROUND: Apply changes of orientation
+                window.rootViewController = .init()
+                window.windowScene = self.window?.windowScene
+            }
+
             window.isHidden = false
         }
+    }
+}
+
+extension TouchTrackingUIView: TouchTrackable {
+    func touchesBegan(_ touches: Set<UITouch>, with receiver: UIWindow) {
+        if !shouldPropagateEventAcrossWindows && window != receiver {
+            return
+        }
+        self.touches.formUnion(touches)
+        updateLocations()
+    }
+
+    func touchesMoved(_ touches: Set<UITouch>, with receiver: UIWindow) {
+        if !shouldPropagateEventAcrossWindows && window != receiver {
+            return
+        }
+        updateLocations()
+    }
+
+    func touchesEndedOrCancelled(_ touches: Set<UITouch>, with receiver: UIWindow) {
+        if !shouldPropagateEventAcrossWindows && window != receiver {
+            return
+        }
+        self.touches.subtract(touches)
+        updateLocations()
     }
 }
 

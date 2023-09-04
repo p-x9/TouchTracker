@@ -27,27 +27,24 @@ class TouchLocationCocoaView: UIView {
         fatalError("init(coder:) has not been implemented")
     }
 
-    override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
+    override func point(inside point: CGPoint, with event: UIEvent?) -> Bool {
+        false
+    }
+}
+
+extension TouchLocationCocoaView: TouchTrackable {
+    func touchesBegan(_ touches: Set<UITouch>, with receiver: UIWindow) {
         self.touches.formUnion(touches)
         self.locations = self.touches.map { $0.location(in: self) }
     }
 
-    override func touchesMoved(_ touches: Set<UITouch>, with event: UIEvent?) {
+    func touchesMoved(_ touches: Set<UITouch>, with receiver: UIWindow) {
         self.locations = self.touches.map { $0.location(in: self) }
     }
 
-    override func touchesCancelled(_ touches: Set<UITouch>, with event: UIEvent?) {
+    func touchesEndedOrCancelled(_ touches: Set<UITouch>, with receiver: UIWindow) {
         self.touches.subtract(touches)
         self.locations = self.touches.map { $0.location(in: self) }
-    }
-
-    override func touchesEnded(_ touches: Set<UITouch>, with event: UIEvent?) {
-        self.touches.subtract(touches)
-        self.locations = self.touches.map { $0.location(in: self) }
-    }
-
-    override func point(inside point: CGPoint, with event: UIEvent?) -> Bool {
-        false
     }
 }
 #endif
