@@ -188,12 +188,14 @@ public class TouchTrackingUIView: UIView {
             }
         }
 
-        let locations = touches.map { $0.location(in: nil) }
+        let globalLocations = touches.map { $0.location(in: nil) }
 
-        zip(pointWindows, locations).forEach { window, location in
+        zip(pointWindows, zip(locations, globalLocations)).forEach { window, location in
+            let (location, globalLocation) = location
+
             window.location = location
-            window.center = .init(x: location.x + offset.x,
-                                  y: location.y + offset.y)
+            window.center = .init(x: globalLocation.x + offset.x,
+                                  y: globalLocation.y + offset.y)
 
             if shouldPropagateEventAcrossWindows,
                let screen = self.window?.screen,
