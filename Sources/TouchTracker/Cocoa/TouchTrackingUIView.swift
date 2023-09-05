@@ -51,7 +51,9 @@ public class TouchTrackingUIView: UIView {
     var touches: Set<UITouch> = []
     var locations: [CGPoint] = [] {
         didSet {
-            updatePoints()
+            DispatchQueue.main.async {
+                self.updatePoints()
+            }
         }
     }
 
@@ -164,7 +166,9 @@ public class TouchTrackingUIView: UIView {
             pointWindows[touches.count..<pointWindows.count].forEach {
                 $0.isHidden = true
                 $0.windowScene = nil
-                $0.uiviewRemoveFormSuperView()
+                if $0.superview != nil {
+                    $0.uiviewRemoveFromSuperView()
+                }
             }
             pointWindows = Array(pointWindows[0..<touches.count])
         }
@@ -201,10 +205,13 @@ public class TouchTrackingUIView: UIView {
                let screen = self.window?.screen,
                let keyboardScene = UIWindowScene.keyboardScene(for: screen),
                let keyboardRemoteWindow = keyboardScene.allWindows.first {
+                window.rootViewController = nil
                 keyboardRemoteWindow.addSubview(window)
             } else {
                 // WORKAROUND: Apply changes of orientation
-                window.rootViewController = .init()
+                if window.rootViewController == nil {
+                    window.rootViewController = .init()
+                }
                 window.windowScene = self.window?.windowScene
             }
 
