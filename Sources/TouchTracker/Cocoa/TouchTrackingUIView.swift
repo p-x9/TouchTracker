@@ -164,7 +164,7 @@ public class TouchTrackingUIView: UIView {
             pointWindows[touches.count..<pointWindows.count].forEach {
                 $0.isHidden = true
                 $0.windowScene = nil
-                $0.removeFromSuperview()
+                $0.uiviewRemoveFormSuperView()
             }
             pointWindows = Array(pointWindows[0..<touches.count])
         }

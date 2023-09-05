@@ -76,4 +76,10 @@ extension UIWindow {
     }
 }
 
+extension UIWindow {
+    func uiviewRemoveFormSuperView() {
+        super.removeFromSuperview()
+    }
+}
+
 #endif
