@@ -44,9 +44,16 @@ public class TouchTrackingUIView: UIView {
     public var displayMode: DisplayMode
 
     /// A boolean value that indicates whether the event should propagate across windows.
-    /// If set to `true`, the touch events received in one window will also be shared
-    /// with other windows when applicable.
+    ///
+    /// If set to `true`, touch events received in other windows will be propagated to this window as well.
     public var shouldPropagateEventAcrossWindows: Bool = false
+
+    /// A boolean value that indicates whether display marks above keyboard window
+    ///
+    /// If you want touched marks to appear above the keyboard, set this value to `true`
+    ///
+    /// When displaying a view above the keyboard window, handling is required that is different from normal.
+    public var shouldDisplayAboveKeyboardWindow: Bool = false
 
     var touches: Set<UITouch> = []
     var locations: [CGPoint] = [] {
@@ -201,7 +208,7 @@ public class TouchTrackingUIView: UIView {
             window.center = .init(x: globalLocation.x + offset.x,
                                   y: globalLocation.y + offset.y)
 
-            if shouldPropagateEventAcrossWindows,
+            if shouldDisplayAboveKeyboardWindow,
                let screen = self.window?.screen,
                let keyboardScene = UIWindowScene.keyboardScene(for: screen),
                let keyboardRemoteWindow = keyboardScene.allWindows.first {
