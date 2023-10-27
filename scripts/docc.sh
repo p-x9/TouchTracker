@@ -19,7 +19,7 @@ generate_docc() {
   xcodebuild docbuild \
     -scheme "$SCHEME" \
     -destination "generic/platform=$destination" \
-    OTHER_DOCC_FLAGS="--transform-for-static-hosting --hosting-base-path {REPO_NAME} --output-path docs" \
+    OTHER_DOCC_FLAGS="--transform-for-static-hosting --hosting-base-path ${REPO_NAME} --output-path docs" \
     OTHER_SWIFT_FLAGS="-emit-extension-block-symbols"
   # OTHER_SWIFT_FLAGS -symbol-graph-minimum-access-level private
 }
