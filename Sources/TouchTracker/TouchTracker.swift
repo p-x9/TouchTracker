@@ -5,6 +5,7 @@ import UIKit
 #endif
 
 @available(macOS, unavailable)
+@available(iOS 13.0, *)
 public struct TouchTrackingView<Content: View>: View {
     let content: Content
 
@@ -85,6 +86,7 @@ public struct TouchTrackingView<Content: View>: View {
 }
 
 @available(macOS, unavailable)
+@available(iOS 13.0, *)
 extension TouchTrackingView {
     /// radius of mark on touched point
     public func touchPointRadius(_ radius: CGFloat) -> Self {
