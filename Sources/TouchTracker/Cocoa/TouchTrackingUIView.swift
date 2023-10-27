@@ -9,6 +9,13 @@
 #if canImport(UIKit)
 import UIKit
 
+/// Anchor view to display a mark on a touched point in a UIKit View
+///
+/// You can use it by adding the touched point to a subview of the view you wish to display.
+///
+/// Since this view is simply used as an anchor, there is no problem setting isHidden to true or setting backgroundColor to clear.
+///
+///  By enabling `isShowLocation`, the coordinates displayed will be calculated using the upper left corner of this anchor view as the origin.
 public class TouchTrackingUIView: UIView {
     /// radius of mark on touched point
     public var radius: CGFloat
@@ -120,6 +127,8 @@ public class TouchTrackingUIView: UIView {
         UIWindow.hook()
     }
 
+    /// It is possible to use ``TouchPointStyle`` to set the initial settings for each property.
+    /// - Parameter style: Style settings such as mark size and color
     @available(iOS 14.0, *)
     public convenience init(style: TouchPointStyle) {
         self.init(
