@@ -4,6 +4,20 @@ import SwiftUI
 import UIKit
 #endif
 
+/// A view to display a mark on a touched point in a SwiftUI View
+///
+/// It can be used in the following two ways.
+/// - Wrap the content with this view
+///  ```swift
+///  TouchTrackingView {
+///    Text("Content View")
+///  }
+///  ```
+/// - Use modifier of SwiftUI.View
+///  ```swift
+///  Text("Content View")
+///      .touchTrack()
+///  ```
 @available(macOS, unavailable)
 @available(iOS 13.0, *)
 public struct TouchTrackingView<Content: View>: View {

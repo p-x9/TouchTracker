@@ -24,7 +24,7 @@ extension UIView {
 }
 
 extension UIWindow {
-    static public var hooked = false
+    static var hooked = false
 
     static func hook() {
         if Self.hooked { return }

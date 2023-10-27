@@ -10,9 +10,13 @@
 import UIKit
 #endif
 
+/// Conditions for displaying touched points.
 public enum DisplayMode {
+    /// Always display touched points
     case always
+    /// Display touched points only during debug builds
     case debugOnly
+    /// Display touched points only during screen recording
     case recordingOnly
 }
 
