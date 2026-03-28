@@ -11,7 +11,7 @@ import UIKit
 #endif
 
 /// Conditions for displaying touched points.
-public enum DisplayMode {
+public enum DisplayMode: Sendable {
     /// Always display touched points
     case always
     /// Display touched points only during debug builds
