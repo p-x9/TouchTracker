@@ -9,7 +9,7 @@
 import SwiftUI
 
 /// Style of the mark displayed at the touched point
-public struct TouchPointStyle: Equatable {
+public struct TouchPointStyle: Sendable, Equatable {
     /// radius of mark on touched point
     public var radius: CGFloat
     /// color of mark on touched point
